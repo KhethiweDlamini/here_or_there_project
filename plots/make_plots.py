@@ -19,7 +19,8 @@ for f in (OUT / 'fonts').glob('*.ttf'):
     font_manager.fontManager.addfont(str(f))
 
 # ---------------------------------------------------------------- data (round 3, Kaggle Version 5)
-OURS = 'OWLv2 + usual-place rule'
+OURS = 'OWLv2 + usual-place prior'
+PRIOR = 'Prior only (usual place)'
 DATA = {
     # C4 (S1 at frozen tau) and D5 / D7 zone table (S2: 24 of 238 present pairs ranked first, 9 named at tau)
     'gap': [  # metric, Session 1 %, Session 2 %
@@ -28,18 +29,18 @@ DATA = {
         ('False sightings\n(object absent, system said "here")', 0, 0),
     ],
     # D4: right zone named, questions where the object had been seen (n = 48)
-    'methods': [(OURS, 5), ('Whole photo, no zones', 0), ('Usual-place rule', 3), ('Random zone', 7)],
+    'methods': [(OURS, 5), ('Whole photo, no zones', 0), (PRIOR, 3), ('Random zone', 7)],
     'n_seen': 48,
     # D7 figure 1: right / wrong zone named / said "not seen" (it was there)
-    'breakdown': [(OURS, 5, 24, 19), ('Whole photo, no zones', 0, 6, 42), ('Usual-place rule', 3, 45, 0),
+    'breakdown': [(OURS, 5, 24, 19), ('Whole photo, no zones', 0, 6, 42), (PRIOR, 3, 45, 0),
                   ('Random zone', 7, 41, 0)],
     'false_sightings': (0, 8), 'never_in_view': (2, 2),
     # D7 zone table: present frame pairs, ranked first ignoring tau, named at tau (zones 5, 6, 8 had none)
     'zones': [('Counter', 127, 15, 0), ('Armchair', 41, 0, 0), ('Floor by armchair', 32, 0, 0),
               ('Corner shelf', 19, 9, 9), ('Centre floor', 19, 0, 0)],
     # D7 hypotheses: (method, right, questions)
-    'H1': [(OURS, 3, 3), ('Whole photo, no zones', 0, 3), ('Usual-place rule', 3, 3), ('Random zone', 0, 3)],
-    'H2': [(OURS, 2, 45), ('Whole photo, no zones', 0, 45), ('Usual-place rule', 0, 45), ('Random zone', 7, 45)],
+    'H1': [(OURS, 3, 3), ('Whole photo, no zones', 0, 3), (PRIOR, 3, 3), ('Random zone', 0, 3)],
+    'H2': [(OURS, 2, 45), ('Whole photo, no zones', 0, 45), (PRIOR, 0, 45), ('Random zone', 7, 45)],
 }
 SOURCE = 'Source: pause_and_find.ipynb, round 3 (Kaggle run v5). Session 2 is held out: 60 frames, 50 questions.'
 
@@ -213,7 +214,7 @@ def plot_breakdown():
               handlelength=1.1, handletextpad=0.4, columnspacing=1.2)
     # stat tiles: the safety side of ours
     tiles = [(f'{DATA["false_sightings"][0]} of {DATA["false_sightings"][1]}', 'false sightings', 'questions where the object was\nnot in view at that moment'),
-             (f'{DATA["never_in_view"][0]} of {DATA["never_in_view"][1]}', 'never-in-view questions', 'answered "not seen"; random and\nthe usual-place rule named a zone')]
+             (f'{DATA["never_in_view"][0]} of {DATA["never_in_view"][1]}', 'never-in-view questions', 'answered "not seen"; random and\nprior only both named a zone')]
     for j, (big, head, sub) in enumerate(tiles):
         y0 = 0.40 - j * 0.32
         fig.patches.append(FancyBboxPatch((0.745, y0), 0.215, 0.30, boxstyle='round,pad=0,rounding_size=0.008',
