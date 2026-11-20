@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Did I lose it here, or there?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<script>try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+/* VOICE: a plain student blog post, readable like a Medium article.
+   IDEA: one calm reading column; figures sit in the text with short captions.
+   PICTURE: the real test room with its 8 zones; a small demo you can click through.
+   COLOUR and TYPE: white or near-black page, grey text, one green for our method. Inter for headings, Source Serif for reading.
+   LAYOUT: 680px column, figures up to 880px, stacks on phones. */
+:root{--bg:#fff;--ink:#242424;--mute:#6b6b6b;--line:#e8e8e8;--soft:#f7f7f7;--acc:#1a8917;--base:#c4c4c4;--warn:#c4581d}
+:root[data-theme=dark]{--bg:#121212;--ink:#e8e8e8;--mute:#a3a3a3;--line:#2c2c2c;--soft:#1c1c1c;--acc:#5cbf59;--base:#555;--warn:#e58a55;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121212;--ink:#e8e8e8;--mute:#a3a3a3;--line:#2c2c2c;--soft:#1c1c1c;--acc:#5cbf59;--base:#555;--warn:#e58a55;color-scheme:dark}}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.6 "Source Serif 4",Georgia,serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top div{max-width:1040px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font:500 15px Inter,sans-serif}
+.top a{color:var(--ink);text-decoration:none}
+#theme{display:flex;align-items:center;gap:8px;font:500 14px Inter,sans-serif;color:var(--ink);background:none;border:1px solid var(--line);border-radius:99px;padding:0 14px;min-height:40px;cursor:pointer}
+article{max-width:680px;margin:0 auto;padding:48px 20px 40px}
+h1,h2,h3{font-family:Inter,sans-serif;letter-spacing:-.015em;color:var(--ink)}
+h1{font-size:clamp(32px,6vw,42px);line-height:1.15;font-weight:700;margin:0 0 12px}
+.sub{font:400 22px/1.4 Inter,sans-serif;color:var(--mute);margin:0 0 28px}
+.by{display:flex;flex-wrap:wrap;gap:4px 14px;font:400 15px/1.5 Inter,sans-serif;color:var(--mute);padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:36px}
+.by b{color:var(--ink);font-weight:500}
+h2{font-size:26px;line-height:1.25;font-weight:700;margin:52px 0 10px}
+h3{font-size:20px;font-weight:700;margin:32px 0 6px}
+p{margin:0 0 24px}ul,ol{margin:0 0 24px;padding-left:1.2em}li{margin-bottom:8px}
+a{color:inherit}
+blockquote{margin:32px 0;padding-left:22px;border-left:3px solid var(--ink);font-style:italic;font-size:22px}
+figure{margin:36px 0}
+figcaption{font:400 14px/1.5 Inter,sans-serif;color:var(--mute);text-align:center;margin-top:10px}
+.ui,table,.ctl{font-family:Inter,sans-serif}
+.room{position:relative;max-width:460px;margin:0 auto;aspect-ratio:3/4}
+.room img,.view img{width:100%;height:100%;object-fit:cover;display:block;border-radius:4px}
+.room svg,.view svg{position:absolute;inset:0;width:100%;height:100%}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--mute)}td.n,th.n{text-align:right;white-space:nowrap}
+tr.us td{font-weight:700}
+/* bars */
+.bars .r{display:grid;grid-template-columns:150px minmax(0,1fr) 84px;gap:12px;align-items:center;padding:7px 0;font:400 15px Inter,sans-serif}
+.bars .t{height:22px;background:var(--soft);border-radius:3px;position:relative}
+.bars .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.bars .t s{position:absolute;top:-4px;bottom:-4px;border-left:1px dashed var(--mute)}
+.bars .v{text-align:right;white-space:nowrap}.bars .v small{color:var(--mute)}
+/* keys */
+.keys{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:center}
+.keys canvas{width:240px;height:240px;border-radius:4px;image-rendering:pixelated;display:block;background:var(--soft)}
+.seg{display:flex;flex-direction:column;gap:6px}
+.seg button,.btn,.objs button{font:500 15px Inter,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:8px 16px;min-height:44px;cursor:pointer;text-align:left}
+.seg button.on,.objs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.btn.go{background:var(--acc);border-color:var(--acc);color:#fff}
+.pipe{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:400 15px Inter,sans-serif}
+.pipe span{padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:var(--soft)}
+.pipe em{font-style:normal;color:var(--mute)}
+/* demo */
+.demo{max-width:880px;margin:36px auto;padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+.dm{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:24px;align-items:start}
+.view{position:relative;aspect-ratio:3/4}
+.stamp{position:absolute;left:8px;top:8px;font:500 12.5px Inter,sans-serif;color:#fff;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:4px}
+input[type=range]{width:100%;accent-color:var(--acc);height:40px}
+.objs,.ctl{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.reply{font:400 18px/1.5 "Source Serif 4",Georgia,serif;margin-top:14px;padding:16px;border-left:3px solid var(--acc);background:var(--bg);min-height:96px}
+.reply small{display:block;font:400 14px/1.5 Inter,sans-serif;color:var(--mute);margin-top:8px}
+.note{font:400 14px/1.5 Inter,sans-serif;color:var(--mute);margin:14px 0 0}
+.reg{display:grid;grid-template-columns:96px repeat(5,minmax(0,1fr));gap:6px;align-items:center;font:500 14px Inter,sans-serif}
+.reg img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px;display:block}
+video{width:100%;display:block;border-radius:4px;background:#000}
+.voice{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:4px 0 0;font:400 14px Inter,sans-serif;color:var(--mute)}
+.voice label{display:flex;gap:8px;align-items:center;min-height:44px}.voice input{width:18px;height:18px;accent-color:var(--acc)}
+#dMic{display:none;align-items:center;gap:8px}#dMic.live{background:#c0392b;border-color:#c0392b;color:#fff}
+#dHeard{min-height:1.5em}
+hr{border:0;text-align:center;margin:48px 0}hr::before{content:"···";letter-spacing:.6em;color:var(--mute)}
+.src{font-size:16px}.src li{margin-bottom:10px}
+footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter,sans-serif;color:var(--mute)}
+@media(max-width:640px){.reg{grid-template-columns:58px repeat(5,minmax(0,1fr));gap:4px;font-size:12px}table{font-size:14px}th,td{padding:8px 4px}body{font-size:18px}.sub{font-size:19px}.keys,.dm{grid-template-columns:minmax(0,1fr)}.keys canvas{margin:0 auto}
+.bars .r{grid-template-columns:100px minmax(0,1fr) 64px;font-size:13.5px}.bars .v small{display:none}.demo{padding:16px;border-radius:0;border-left:0;border-right:0;margin:36px 0}.view{max-width:340px;margin:0 auto}}
+@media (prefers-reduced-motion:no-preference){.bars .t i{transition:width .5s}}
+</style>
+</head>
+<body>
+<div class="top"><div><a href="#">Here, or there?</a><button id="theme" aria-label="Switch light or dark mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark</span></button></div></div>
+
+<article>
+<h1>Did I lose it here, or there?</h1>
+<p class="sub">We built a phone camera that remembers where you last left your things, and tested it on photos it had never seen.</p>
+<div class="by"><span><b>Christiana Adisa, Safia Gibril, Khethiwe Dlamini and Alaa Almouiz Farog Mohammed</b></span><span>AIMS · November 2026</span><span>6 min read</span></div>
+
+<figure>
+<video controls playsinline preload="metadata" poster="poster.jpg" src="video.mp4"></video>
+<figcaption>How the app should work: Gogo asks where her keys are, and the phone on the stand answers out loud.</figcaption>
+</figure>
+
+<h2>The problem</h2>
+<blockquote>Gogo has low vision. She asks, “Where are my keys?” A phone on a stand answers out loud: “Your keys were on the armchair until 2:32 pm.”</blockquote>
+<p>People with visual impairments search for misplaced things every day. Most tools that could help need an internet connection, cloud models or expensive wearable cameras. We wanted something that works on a cheap phone, without internet, and keeps the photos on the device.</p>
+<p><strong>Our question:</strong> can a small model, looking at one photo every 30 seconds from a fixed camera, say which of 8 zones in a room an object was last seen in, and when it disappeared? And can it say “not seen” when it has not seen the object?</p>
+<p>The system gives one of three answers: <em>visible now in a zone</em>, <em>last seen in a zone at a time</em>, or <em>not seen</em>.</p>
+<p><strong>What already exists.</strong> Find My Things (Morrison et al., 2023) recognises a user’s own objects, but only the ones the camera is pointing at right now. GO-Finder (Yagi et al., 2021), MemPal (Maniar et al., 2025) and the Ego4D Visual Queries benchmark find where an object was last seen, but they use video from a camera the person wears, and MemPal sends it to cloud models.</p>
+<p><strong>What we expected.</strong> H1: our system would beat random guessing when objects are in clear view or in their usual place. H2: a simple “usual place” rule would fail when objects are small, hidden or moved somewhere new.</p>
+
+<h2>Our data</h2>
+<p>We recorded our own dataset. A phone on a stand took a photo every 30 seconds. We split the room into 8 zones and used 5 objects: keys, wallet, mug, phone and water bottle.</p>
+<figure>
+<div class="room"><img src="room.jpg" alt="The test room: an armchair, a corner shelf, a counter with cupboards, and glass shelves"><svg id="heroZones" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+<figcaption>Our test room in the AIMS lobby, as the fixed phone sees it. The lines mark the 8 zones.</figcaption>
+</figure>
+<p>We also took 207 registration photos of the objects.</p>
+<ul>
+<li><strong>Session 1</strong> (20 photos) was used for training and tuning.</li>
+<li><strong>Session 2</strong> (60 photos) was used only for testing. We made it harder on purpose: the lights go off and on, a person is in 52 of the 60 photos, and objects end up in new places, such as behind the armchair leg or behind a plant.</li>
+</ul>
+<figure>
+<div class="reg" id="reg"></div>
+<figcaption>Examples of our registration photos: close-ups of each object on different surfaces, taken on different phones.</figcaption>
+</figure>
+<p>We labelled every object and person in Roboflow and kept a placement log of where each object was in every photo. To keep the test fair, we never tuned anything on Session 2, we chose the 50 test questions (10 per object) before any model saw Session 2, and each answer only uses photos taken up to the time of the question.</p>
+
+<h2>What we tried</h2>
+<p>Our proposal planned to use a pretrained model with no training: DINOv2 would compare each zone of the photo with the registration photos. It did not work, so we tried other methods. The score is how often each method found the object in the right zone on Session 1.</p>
+<table>
+<thead><tr><th>Method</th><th>Training</th><th class="n">Score</th></tr></thead>
+<tbody>
+<tr><td>DINOv2, one crop per zone</td><td>None</td><td class="n">0%</td></tr>
+<tr><td>DINOv2 on smaller tiles</td><td>None</td><td class="n">8%</td></tr>
+<tr><td>OWLv2 object detector</td><td>None</td><td class="n">36%</td></tr>
+<tr class="us"><td>YOLO11-s</td><td>Fine-tuned on Session 1</td><td class="n">64%</td></tr>
+</tbody></table>
+<p>The main reason the first methods failed is size. The keys are about 37 × 23 pixels in a 12-megapixel photo. When a model shrinks the photo to save computing power, the keys almost disappear. Pick a model below to see the keys at the size each model received them.</p>
+<figure>
+<div class="keys"><canvas id="keysCv" width="240" height="240" aria-label="The keys at the size each model receives them"></canvas><div class="seg" id="keysSeg"></div></div>
+<figcaption id="keysCap"></figcaption>
+</figure>
+
+<h3>The final system</h3>
+<div class="pipe"><span>Photo every 30 s</span><em>→</em><span>640-pixel tiles</span><em>→</em><span>YOLO11-s</span><em>→</em><span>Best box per object</span><em>→</em><span>Zone</span><em>→</em><span>Spoken answer</span></div>
+<p style="margin-top:20px">YOLO11-s is a small detector with 9.4 million parameters. We cut each photo into 640-pixel tiles so small objects keep their full detail. We fine-tuned the model on Session 1 and pasted objects into new places in the training photos, so it learns what the objects look like rather than where they were. The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
+
+<h2>Results</h2>
+<p>On the 50 test questions from Session 2, our system named the right zone 48% of the time. Random guessing and the “usual place” rule both got 12%.</p>
+<figure>
+<div class="bars" id="mainBars"></div>
+<figcaption>Right zone on the 50 Session 2 questions. The dashed line is chance (1 in 8). The range in brackets is the 95% confidence interval.</figcaption>
+</figure>
+<p>Results were very different between objects:</p>
+<table>
+<thead><tr><th>Object</th><th class="n">Right zone</th></tr></thead>
+<tbody><tr><td>Water bottle</td><td class="n">9 of 10</td></tr><tr><td>Mug</td><td class="n">9 of 10</td></tr><tr><td>Phone</td><td class="n">6 of 10</td></tr><tr><td>Wallet</td><td class="n">0 of 10</td></tr><tr><td>Keys</td><td class="n">0 of 10</td></tr></tbody></table>
+<p>Almost all mistakes were misses, not wrong places. In the 220 test photos where an object was visible, the system found it in the right zone 74 times, named the wrong zone once, and missed it 145 times. It never reported an object that was not there. For someone who cannot check, “not seen” is safer than being sent to the wrong place.</p>
+<p>This supports H1. It also supports H2: the “usual place” rule did no better than chance, because objects moved between sessions.</p>
+<p><strong>Why we only report Session 2.</strong> Our OWLv2 version ranked the right zone first 89% of the time on Session 1, which we also used to choose its settings. On Session 2 this fell to 10%. Scores on the tuning data can look much better than they really are.</p>
+
+<h2>Try it</h2>
+<p>Move through the 60 real test photos and ask where an object is. You can click an object or ask out loud, and the answer is shown and read out loud.</p>
+</article>
+
+<div class="demo">
+<div class="dm">
+<div>
+<div class="view"><img id="dImg" alt="Session 2 photo at the chosen time, with people blurred"><svg id="dSvg" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"></svg><span class="stamp" id="dTime"></span></div>
+<input type="range" id="dRange" min="0" max="59" value="20" aria-label="Time in Session 2">
+</div>
+<div>
+<div class="ui" style="font-size:15px;color:var(--mute)">1. Pick a time with the slider. 2. Pick an object and click ask, or press the microphone and say, for example, “Where are my keys?”</div>
+<div class="objs" id="dObjs"></div>
+<div class="ctl"><button class="btn go" id="dAsk">Where are my keys?</button><button class="btn" id="dPlay">Play</button><button class="btn" id="dRand">Random time</button></div>
+<div class="voice"><button class="btn" id="dMic" aria-label="Ask by voice"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg><span>Ask by voice</span></button><label><input type="checkbox" id="dSpeak" checked> Read answers out loud</label><span id="dHeard"></span></div>
+<div class="reply" id="dReply" aria-live="polite"><small style="margin:0">The answer will appear here.</small></div>
+<p class="note" id="micNote">Voice questions work in Chrome and Edge. If you don’t see the microphone button, your browser doesn’t support them, so use the object buttons.</p>
+<p class="note">The answers in this demo come from our placement log, using the same last-seen rule as the system. They show what the system should say. Under each answer is how often the real system got that object right in the test.</p>
+</div>
+</div>
+</div>
+
+<article style="padding-top:0">
+<h2>Where it fails</h2>
+<ul>
+<li><strong>Keys and wallet.</strong> The system never found them in the right zone (0 of 10 each). Both are small and lie flat.</li>
+<li><strong>The busy counter.</strong> Most test questions were about objects on the counter, next to plants, a tap and other items, and part of the time with the cabinet lights off. Only 4 of 27 of these questions were right.</li>
+<li><strong>The middle of the floor.</strong> The wallet lay on the carpet for 19 photos and was never found.</li>
+</ul>
+<h3>Limits of our test</h3>
+<ul>
+<li>We trained a model, although our proposal said we would not.</li>
+<li>We used one room, one camera, 5 objects and 50 test questions. With this few questions, the true accuracy could be anywhere from about 35% to 61%.</li>
+<li>The camera sat slightly lower in Session 2, so the zone outlines need to be adjusted for each session.</li>
+<li>We did not test it on a phone. It took 25.7 seconds per photo on a CPU, which fits within the 30 seconds between photos.</li>
+<li>We did not test it with people who have visual impairments. That needs an ethics review.</li>
+</ul>
+
+<h2>What we learned</h2>
+<p>A small model can do this task, but only if it sees the photo at full resolution. Shrinking the photo to save computing power made the small objects disappear. A 9.4-million-parameter detector that saw the keys at full size did better than a 22-million-parameter DINOv2 model that saw them as a few pixels.</p>
+<p>We also learned that how a system fails matters. For someone who cannot see, a wrong answer costs more than “not seen”.</p>
+<p><strong>Next steps:</strong> label the registration photos so they can be used for training, add more training photos in low light and on cluttered surfaces, and test the smaller YOLO11-n model on a real phone.</p>
+
+<hr>
+<h2 style="margin-top:0">Sources</h2>
+<ol class="src">
+<li>Our project proposal, notebooks (Kaggle), placement log, and Session 1 and 2 photos with Roboflow labels. Charts are redrawn from our own results.</li>
+<li>Our presentation: <a href="https://canva.link/q8335kim80oplpl">Canva slides</a>.</li>
+<li>Morrison et al. (2023). Find My Things.</li>
+<li>Yagi et al. (2021). GO-Finder.</li>
+<li>Maniar et al. (2025). MemPal.</li>
+<li>Ego4D Visual Queries benchmark.</li>
+<li>DINOv2 ViT-S/14 (<a href="https://huggingface.co/Addax-Data-Science/DINOV2-VITS14">Hugging Face</a>), OWLv2 and YOLO11-s models.</li>
+<li>Roboflow (labelling), Kaggle and Google Colab (computing), gTTS and browser text-to-speech.</li>
+</ol>
+</article>
+<footer>People in the photos are blurred, and so are the certificates in the glass cabinet.</footer>
+
+<script>
+{
+const D={"frames":[{"f":"IMG001","t":"22:16:11","light":"On","s":["4 Counter","4 Counter","4 Counter","not in room","2 Floor by armchair"]},{"f":"IMG002","t":"22:16:43","light":"On","s":["4 Counter","4 Counter","4 Counter","not in room","2 Floor by armchair"]},{"f":"IMG003","t":"22:17:14","light":"On","s":["4 Counter","4 Counter","4 Counter","carried \u00b7 boxed in hand","2 Floor by armchair"]},{"f":"IMG004","t":"22:17:44","light":"On","s":["blocked by person (4 Counter)","4 Counter \u00b7 partly blocked","4 Counter","4 Counter \u00b7 her hand still on it","2 Floor by armchair"]},{"f":"IMG005","t":"22:18:14","light":"On","s":["4 Counter","4 Counter","4 Counter","4 Counter","2 Floor by armchair"]},{"f":"IMG006","t":"22:18:45","light":"On","s":["4 Counter","4 Counter","4 Counter","4 Counter","2 Floor by armchair"]},{"f":"IMG007","t":"22:19:15","light":"On","s":["4 Counter","4 Counter","carried \u00b7 boxed in hand","4 Counter","2 Floor by armchair"]},{"f":"IMG008","t":"22:19:45","light":"On","s":["4 Counter","4 Counter","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG009","t":"22:20:17","light":"On","s":["carried \u00b7 boxed in hand","4 Counter","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG010","t":"22:20:47","light":"On","s":["carried \u00b7 no box","4 Counter \u00b7 partly blocked","3 Corner shelf","blocked by person (4 Counter)","2 Floor by armchair"]},{"f":"IMG011","t":"22:21:19","light":"On","s":["removed","4 Counter","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG012","t":"22:21:50","light":"On","s":["carried \u00b7 no box","blocked by person (4 Counter)","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG013","t":"22:22:20","light":"On","s":["4 Counter","4 Counter","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG014","t":"22:22:50","light":"On","s":["blocked by person (4 Counter)","blocked by person (4 Counter)","3 Corner shelf","blocked by person (4 Counter)","2 Floor by armchair"]},{"f":"IMG015","t":"22:23:22","light":"On","s":["4 Counter","4 Counter","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG016","t":"22:23:53","light":"On","s":["4 Counter","4 Counter","3 Corner shelf","4 Counter","2 Floor by armchair"]},{"f":"IMG017","t":"22:24:24","light":"On","s":["4 Counter","4 Counter","carried \u00b7 no box","4 Counter","2 Floor by armchair"]},{"f":"IMG018","t":"22:24:55","light":"On","s":["4 Counter","4 Counter \u00b7 partly blocked","carried \u00b7 boxed in hand","4 Counter","2 Floor by armchair"]},{"f":"IMG019","t":"22:25:27","light":"On","s":["4 Counter","4 Counter","carried \u00b7 no box","4 Counter","2 Floor by armchair"]},{"f":"IMG020","t":"22:25:59","light":"On","s":["4 Counter","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG021","t":"22:26:29","light":"On","s":["4 Counter","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG022","t":"22:27:00","light":"On","s":["4 Counter","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG023","t":"22:27:32","light":"On","s":["4 Counter","4 Counter","1 Armchair \u00b7 partly hidden \u00b7 partly blocked","4 Counter","2 Floor by armchair"]},{"f":"IMG024","t":"22:28:02","light":"Ceiling light off","s":["4 Counter","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG025","t":"22:28:32","light":"Ceiling light off","s":["4 Counter","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG026","t":"22:29:03","light":"On","s":["blocked by person (4 Counter)","4 Counter \u00b7 partly blocked","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG027","t":"22:29:34","light":"On","s":["carried \u00b7 boxed in hand","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG028","t":"22:30:05","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG029","t":"22:30:37","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG030","t":"22:31:08","light":"On","s":["removed","4 Counter \u00b7 partly blocked","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG031","t":"22:31:38","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG032","t":"22:32:10","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","2 Floor by armchair"]},{"f":"IMG033","t":"22:32:40","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","carried \u00b7 boxed in hand"]},{"f":"IMG034","t":"22:33:12","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","carried \u00b7 boxed in hand"]},{"f":"IMG035","t":"22:33:43","light":"On","s":["removed","blocked by person (4 Counter)","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG036","t":"22:34:14","light":"On","s":["removed","blocked by person (4 Counter)","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly blocked","4 Counter"]},{"f":"IMG037","t":"22:34:44","light":"On","s":["removed","4 Counter \u00b7 partly blocked","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG038","t":"22:35:14","light":"On","s":["removed","4 Counter \u00b7 partly blocked","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG039","t":"22:35:45","light":"On","s":["removed","4 Counter","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG040","t":"22:36:17","light":"On","s":["removed","carried \u00b7 boxed in hand","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG041","t":"22:36:49","light":"On","s":["removed","carried \u00b7 boxed in hand","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG042","t":"22:37:20","light":"On","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG043","t":"22:37:50","light":"On","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","blocked by person (4 Counter)","4 Counter"]},{"f":"IMG044","t":"22:38:20","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","blocked by person (4 Counter)","4 Counter"]},{"f":"IMG045","t":"22:38:52","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG046","t":"22:39:23","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG047","t":"22:39:53","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter","4 Counter"]},{"f":"IMG048","t":"22:40:23","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","carried \u00b7 boxed in hand","4 Counter"]},{"f":"IMG049","t":"22:40:54","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","4 Counter"]},{"f":"IMG050","t":"22:41:25","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","carried \u00b7 boxed in hand"]},{"f":"IMG051","t":"22:41:57","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG052","t":"22:42:29","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG053","t":"22:42:59","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG054","t":"22:43:29","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG055","t":"22:44:00","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG056","t":"22:44:32","light":"On, cabinet lights off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG057","t":"22:45:02","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG058","t":"22:45:34","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG059","t":"22:46:04","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]},{"f":"IMG060","t":"22:46:35","light":"Off","s":["removed","7 Centre floor","1 Armchair \u00b7 partly hidden","4 Counter \u00b7 partly hidden","3 Corner shelf \u00b7 partly hidden"]}],"zones":[{"id":1,"name":"Armchair","poly":[[0.0,0.53],[0.195,0.53],[0.195,0.685],[0.0,0.685]]},{"id":2,"name":"Floor by armchair","poly":[[0.0,0.685],[0.195,0.685],[0.195,0.6],[0.25,0.6],[0.25,1.0],[0.0,1.0]]},{"id":3,"name":"Corner shelf","poly":[[0.32,0.42],[0.6,0.42],[0.6,0.575],[0.32,0.575]]},{"id":4,"name":"Counter","poly":[[0.605,0.41],[1.0,0.41],[1.0,0.552],[0.605,0.527]]},{"id":5,"name":"Under-counter cupboard","poly":[[0.605,0.527],[1.0,0.552],[1.0,0.757],[0.605,0.64]]},{"id":6,"name":"Glass shelves","poly":[[0.69,0.05],[0.98,0.05],[0.98,0.41],[0.69,0.41]]},{"id":7,"name":"Centre floor","poly":[[0.25,0.585],[0.605,0.585],[0.605,1.0],[0.25,1.0]]},{"id":8,"name":"Floor by cupboards","poly":[[0.605,0.64],[1.0,0.757],[1.0,1.0],[0.605,1.0]]}],"boxes":{"IMG044":{"water_bottle":[0.9806,0.4762,1.0,0.5432],"wallet":[0.4106,0.6753,0.4512,0.7198],"mug":[0.0164,0.6601,0.0468,0.6805]},"IMG022":{"water_bottle":[0.196,0.6211,0.2148,0.6661],"wallet":[0.8095,0.5093,0.8555,0.5256],"keys":[0.8253,0.5278,0.8449,0.5342],"phone":[0.8739,0.5327,0.9212,0.5377],"mug":[0.0159,0.6594,0.0486,0.6808]},"IMG047":{"mug":[0.0162,0.6596,0.0475,0.681],"wallet":[0.4103,0.675,0.4521,0.7197],"phone":[0.8752,0.5321,0.9215,0.5377],"water_bottle":[0.9806,0.4758,1.0,0.5434]},"IMG050":{"mug":[0.0162,0.6596,0.0469,0.6809],"wallet":[0.41,0.6754,0.4521,0.7201],"water_bottle":[0.5569,0.401,0.6387,0.4323],"phone":[0.6265,0.5171,0.6357,0.5198]},"IMG030":{"water_bottle":[0.1956,0.6205,0.2146,0.666],"mug":[0.0159,0.6597,0.047,0.681],"phone":[0.8748,0.5327,0.9236,0.5379],"wallet":[0.8494,0.5083,0.8582,0.5164]},"IMG053":{"mug":[0.016,0.6595,0.0473,0.6809],"wallet":[0.4099,0.6754,0.4522,0.7197],"water_bottle":[0.4883,0.4845,0.4983,0.5108],"phone":[0.6267,0.5169,0.636,0.5198]},"IMG059":{"mug":[0.0157,0.6596,0.0469,0.6811],"wallet":[0.41,0.6753,0.4515,0.7197],"water_bottle":[0.4886,0.4856,0.4983,0.5084],"phone":[0.6266,0.517,0.6355,0.5198]},"IMG060":{"water_bottle":[0.4874,0.4865,0.4985,0.5114],"wallet":[0.4106,0.6757,0.452,0.7195],"mug":[0.016,0.66,0.0463,0.6805],"phone":[0.6272,0.5168,0.6362,0.5204]},"IMG049":{"mug":[0.0162,0.6598,0.0473,0.6808],"phone":[0.6264,0.5166,0.636,0.52],"wallet":[0.4101,0.6749,0.4518,0.7203],"water_bottle":[0.9807,0.4755,1.0,0.5432]},"IMG028":{"mug":[0.0158,0.6599,0.0467,0.6805],"water_bottle":[0.1952,0.6214,0.2153,0.6659],"wallet":[0.8091,0.5084,0.8564,0.5253],"phone":[0.8735,0.5318,0.9225,0.5384]},"IMG055":{"mug":[0.0165,0.6599,0.0477,0.6809],"wallet":[0.4095,0.6755,0.452,0.7192],"water_bottle":[0.4884,0.4841,0.4981,0.5106],"phone":[0.6266,0.517,0.6359,0.5197]},"IMG057":{"mug":[0.0157,0.6601,0.0466,0.6807],"wallet":[0.4107,0.6755,0.4515,0.7199],"water_bottle":[0.4881,0.4848,0.4985,0.5106],"phone":[0.6265,0.5167,0.6357,0.52]},"IMG024":{"water_bottle":[0.1954,0.6207,0.2152,0.6668],"mug":[0.0148,0.6621,0.0487,0.6811],"wallet":[0.8091,0.5092,0.8554,0.5252],"keys":[0.8258,0.5281,0.8447,0.535],"phone":[0.875,0.5326,0.9206,0.5375]},"IMG008":{"wallet":[0.8078,0.5098,0.8553,0.5272],"keys":[0.803,0.5262,0.8318,0.5338],"phone":[0.8751,0.5331,0.9201,0.5383],"mug":[0.407,0.5029,0.4208,0.514],"water_bottle":[0.1954,0.6215,0.2138,0.6661]},"IMG026":{"mug":[0.0139,0.6596,0.0474,0.6803],"water_bottle":[0.195,0.6204,0.2151,0.6667],"phone":[0.8739,0.533,0.9229,0.5381],"wallet":[0.8494,0.5174,0.8576,0.5262]},"IMG054":{"water_bottle":[0.4877,0.4839,0.4982,0.511],"mug":[0.0161,0.6594,0.0471,0.6809],"wallet":[0.41,0.6749,0.4523,0.7198],"phone":[0.6265,0.516,0.6361,0.5201]},"IMG048":{"mug":[0.016,0.6599,0.0472,0.681],"wallet":[0.4099,0.6747,0.452,0.7198],"water_bottle":[0.98,0.4751,1.0,0.5438],"phone":[0.3278,0.4026,0.3381,0.428]},"IMG052":{"mug":[0.0154,0.6595,0.0471,0.6814],"water_bottle":[0.4878,0.4841,0.4984,0.511],"wallet":[0.4099,0.6753,0.4525,0.7199],"phone":[0.6267,0.5171,0.6361,0.5197]},"IMG045":{"wallet":[0.4101,0.675,0.4519,0.7201],"phone":[0.8762,0.5327,0.9209,0.5372],"water_bottle":[0.9814,0.4764,1.0,0.5431],"mug":[0.0165,0.6591,0.0477,0.6811]},"IMG029":{"water_bottle":[0.1951,0.6214,0.2148,0.6666],"mug":[0.0146,0.6601,0.0466,0.6809],"wallet":[0.8095,0.5089,0.8555,0.5263],"phone":[0.8742,0.5322,0.9219,0.5382]},"IMG002":{"keys":[0.8023,0.5258,0.8317,0.5336],"mug":[0.6821,0.5063,0.7085,0.5234],"water_bottle":[0.1953,0.6211,0.2141,0.6654],"wallet":[0.807,0.5092,0.8555,0.5268]},"IMG058":{"wallet":[0.41,0.6749,0.4521,0.7196],"water_bottle":[0.4883,0.4865,0.4989,0.5113],"mug":[0.0162,0.6601,0.0481,0.6813],"phone":[0.6272,0.5169,0.6358,0.5202]},"IMG010":{"wallet":[0.8074,0.5095,0.821,0.5252],"mug":[0.4067,0.5028,0.4207,0.5137],"water_bottle":[0.1958,0.6215,0.2135,0.666]},"IMG018":{"water_bottle":[0.1962,0.6212,0.2149,0.6667],"mug":[0.6464,0.4338,0.6689,0.4545],"wallet":[0.8216,0.5093,0.8556,0.5263],"phone":[0.8741,0.5325,0.9233,0.5393],"keys":[0.8249,0.5278,0.8455,0.5354]},"IMG037":{"water_bottle":[0.9819,0.4759,1.0,0.5432],"phone":[0.8754,0.5324,0.9211,0.537],"mug":[0.0161,0.6601,0.0477,0.6806],"wallet":[0.8218,0.5081,0.8563,0.5257]},"IMG034":{"phone":[0.875,0.5321,0.9211,0.5369],"wallet":[0.8094,0.5094,0.8556,0.5249],"water_bottle":[0.1386,0.5176,0.1683,0.5638],"mug":[0.0161,0.6597,0.0435,0.6806]},"IMG005":{"mug":[0.6824,0.5065,0.7087,0.5238],"wallet":[0.8076,0.51,0.8548,0.5271],"keys":[0.8027,0.5262,0.8316,0.5335],"phone":[0.8749,0.5328,0.9204,0.5381],"water_bottle":[0.1959,0.6216,0.2137,0.666]},"IMG025":{"mug":[0.0145,0.6615,0.0455,0.6822],"water_bottle":[0.196,0.6207,0.2154,0.6663],"phone":[0.8748,0.5333,0.9213,0.5375],"keys":[0.8252,0.5253,0.8471,0.5348],"wallet":[0.8089,0.5092,0.8556,0.525]},"IMG056":{"mug":[0.0164,0.6596,0.0474,0.6807],"wallet":[0.4103,0.6751,0.4521,0.72],"water_bottle":[0.4877,0.484,0.4979,0.5109],"phone":[0.6267,0.5169,0.6357,0.5202]},"IMG019":{"water_bottle":[0.1935,0.6195,0.2161,0.6679],"wallet":[0.8095,0.5091,0.8564,0.5265],"keys":[0.8247,0.5279,0.8446,0.5347],"phone":[0.8743,0.5326,0.9222,0.5382]},"IMG035":{"phone":[0.8769,0.5319,0.9205,0.5377],"water_bottle":[0.9819,0.4762,1.0,0.5438],"mug":[0.016,0.66,0.0464,0.6807]},"IMG032":{"wallet":[0.8092,0.5092,0.8555,0.5258],"phone":[0.8758,0.5321,0.9211,0.5371],"water_bottle":[0.1965,0.621,0.2139,0.6662],"mug":[0.0163,0.6599,0.0467,0.6807]},"IMG014":{"mug":[0.4065,0.5029,0.4214,0.514],"water_bottle":[0.1953,0.6218,0.2141,0.6664]},"IMG027":{"keys":[0.845,0.4949,0.857,0.5085],"wallet":[0.808,0.5082,0.8564,0.5253],"phone":[0.8745,0.5322,0.9228,0.5384],"water_bottle":[0.1941,0.6207,0.216,0.6677],"mug":[0.0129,0.6582,0.0497,0.6821]},"IMG009":{"wallet":[0.8073,0.5098,0.8549,0.5273],"keys":[0.8112,0.5116,0.8207,0.5214],"phone":[0.875,0.533,0.92,0.5381],"mug":[0.4065,0.503,0.4217,0.5142],"water_bottle":[0.1955,0.6217,0.2138,0.6661]},"IMG046":{"water_bottle":[0.9798,0.4764,1.0,0.5453],"phone":[0.8879,0.5317,0.9247,0.5388],"wallet":[0.4114,0.6761,0.4512,0.7199],"mug":[0.0158,0.6593,0.0478,0.6813]},"IMG051":{"mug":[0.0161,0.6598,0.0477,0.6808],"water_bottle":[0.4889,0.484,0.4982,0.511],"phone":[0.6268,0.517,0.6354,0.5199],"wallet":[0.4102,0.6752,0.4522,0.7195]},"IMG004":{"phone":[0.8849,0.5094,0.9203,0.5319],"wallet":[0.8443,0.51,0.856,0.5158],"mug":[0.6828,0.5064,0.7083,0.5226],"water_bottle":[0.1953,0.6206,0.2142,0.6659]},"IMG036":{"water_bottle":[0.9809,0.4759,1.0,0.5436],"mug":[0.0157,0.6602,0.0467,0.6806],"phone":[0.8992,0.5322,0.9212,0.5363]},"IMG020":{"water_bottle":[0.1954,0.6204,0.215,0.6671],"mug":[0.0147,0.6601,0.0475,0.6818],"wallet":[0.8079,0.5089,0.8565,0.5252],"phone":[0.874,0.5323,0.9223,0.5386],"keys":[0.8239,0.5273,0.8446,0.5341]},"IMG043":{"wallet":[0.4111,0.6755,0.4527,0.7202],"mug":[0.0166,0.6601,0.0468,0.6805],"water_bottle":[0.9807,0.4763,1.0,0.5449]},"IMG042":{"wallet":[0.4107,0.6754,0.4525,0.7197],"water_bottle":[0.9814,0.4759,1.0,0.5437],"phone":[0.8753,0.5325,0.9214,0.5373],"mug":[0.0166,0.6597,0.0473,0.681]},"IMG017":{"water_bottle":[0.1944,0.6207,0.2146,0.6667],"wallet":[0.8074,0.5096,0.8548,0.5275],"keys":[0.8247,0.527,0.8453,0.535],"phone":[0.8739,0.5327,0.9215,0.5385]},"IMG015":{"wallet":[0.8075,0.5096,0.8544,0.5268],"keys":[0.8256,0.5274,0.844,0.5343],"phone":[0.8754,0.5328,0.9204,0.5379],"mug":[0.4067,0.5029,0.4216,0.514],"water_bottle":[0.1948,0.6219,0.2146,0.6669]},"IMG006":{"water_bottle":[0.1954,0.6213,0.2136,0.6658],"mug":[0.6828,0.5066,0.7087,0.5235],"wallet":[0.8075,0.5096,0.8547,0.5264],"keys":[0.8026,0.526,0.8322,0.5337],"phone":[0.8752,0.5328,0.9202,0.5375]},"IMG007":{"phone":[0.8749,0.5327,0.9203,0.5381],"wallet":[0.8075,0.5099,0.8549,0.5268],"keys":[0.8026,0.5262,0.8318,0.5331],"mug":[0.5886,0.4289,0.614,0.4479],"water_bottle":[0.1955,0.6212,0.2136,0.6659]},"IMG001":{"wallet":[0.8075,0.5096,0.8544,0.5267],"keys":[0.8027,0.5259,0.8316,0.5335],"mug":[0.6825,0.5065,0.7092,0.5232],"water_bottle":[0.1951,0.6215,0.2137,0.6666]},"IMG023":{"mug":[0.0162,0.6647,0.0477,0.6817],"water_bottle":[0.1958,0.6209,0.2144,0.6663],"phone":[0.8738,0.5325,0.9246,0.5384],"wallet":[0.8088,0.508,0.8568,0.5265],"keys":[0.825,0.5281,0.8446,0.5344]},"IMG021":{"water_bottle":[0.1948,0.6207,0.2141,0.6664],"mug":[0.0157,0.6592,0.0486,0.6815],"phone":[0.8746,0.5324,0.9221,0.539],"keys":[0.824,0.528,0.8455,0.5348],"wallet":[0.8085,0.5093,0.8554,0.5261]},"IMG041":{"water_bottle":[0.9814,0.4758,1.0,0.5437],"wallet":[0.4632,0.4747,0.5253,0.5063],"mug":[0.0168,0.6597,0.0486,0.6805],"phone":[0.8761,0.5322,0.9212,0.5373]},"IMG038":{"mug":[0.0162,0.6599,0.047,0.6804],"phone":[0.8757,0.5322,0.9209,0.537],"water_bottle":[0.9814,0.4763,1.0,0.544],"wallet":[0.8257,0.5095,0.8555,0.5259]},"IMG040":{"water_bottle":[0.9816,0.4763,1.0,0.545],"wallet":[0.4464,0.4696,0.5042,0.5032],"mug":[0.0159,0.6593,0.0485,0.6813],"phone":[0.8754,0.532,0.9217,0.5375]},"IMG033":{"wallet":[0.8098,0.5095,0.8557,0.5254],"phone":[0.8758,0.5323,0.9209,0.5371],"mug":[0.0166,0.6588,0.0497,0.6807],"water_bottle":[0.1844,0.4411,0.2455,0.4664]},"IMG039":{"water_bottle":[0.9811,0.4765,1.0,0.5438],"wallet":[0.8107,0.5091,0.8566,0.5257],"phone":[0.8745,0.5323,0.9225,0.5375],"mug":[0.0164,0.6597,0.0468,0.6805]},"IMG012":{"phone":[0.8754,0.5325,0.9208,0.5376],"mug":[0.4066,0.5028,0.4214,0.5136],"water_bottle":[0.1958,0.6217,0.2131,0.6663]},"IMG016":{"water_bottle":[0.1951,0.6206,0.2144,0.6668],"mug":[0.4071,0.5023,0.4219,0.5141],"keys":[0.8251,0.5276,0.8443,0.5346],"phone":[0.8737,0.5323,0.9209,0.5382],"wallet":[0.8084,0.5094,0.8542,0.5269]},"IMG031":{"water_bottle":[0.196,0.6209,0.2149,0.6657],"mug":[0.0162,0.6598,0.0469,0.6805],"phone":[0.8758,0.5324,0.9209,0.537],"wallet":[0.8093,0.5092,0.8557,0.5252]},"IMG013":{"wallet":[0.8081,0.5097,0.855,0.5269],"keys":[0.8254,0.5275,0.8444,0.5345],"phone":[0.8751,0.5328,0.9203,0.5378],"mug":[0.4065,0.5026,0.4207,0.5139],"water_bottle":[0.1954,0.6214,0.2138,0.6658]},"IMG011":{"wallet":[0.8079,0.5097,0.8544,0.5268],"phone":[0.8751,0.533,0.9202,0.5379],"mug":[0.4071,0.5029,0.4208,0.514],"water_bottle":[0.1958,0.6216,0.2141,0.6658]},"IMG003":{"wallet":[0.8076,0.5098,0.8546,0.5269],"keys":[0.8024,0.526,0.8318,0.5338],"mug":[0.6825,0.5066,0.7088,0.5234],"phone":[0.2813,0.4103,0.321,0.442],"water_bottle":[0.1953,0.6211,0.2139,0.666]}},"keysW":88};
+const $=s=>document.querySelector(s);
+const OBJ=['Keys','Wallet','Mug','Phone','Water bottle'],OK=['keys','wallet','mug','phone','water_bottle'];
+const ZN={1:'armchair',2:'floor by the armchair',3:'corner shelf',4:'counter',5:'under-counter cupboard',6:'glass shelves',7:'centre floor',8:'floor by the cupboards'};
+const pts=p=>p.map(q=>q.join(',')).join(' ');
+const zones=hi=>D.zones.map(z=>`<polygon points="${pts(z.poly)}" fill="${hi===z.id?'rgba(26,137,23,.3)':'none'}" stroke="${hi===z.id?'#5cbf59':'rgba(255,255,255,.75)'}" stroke-width="${hi===z.id?2.5:1}" vector-effect="non-scaling-stroke"/>`).join('');
+$('#heroZones').innerHTML=zones(0);
+const REG=[['Keys','keys',[0,4,6,8,9]],['Wallet','wallet',[1,2,6,8,9]],['Mug','mug',[1,3,6,8,9]],['Phone','phone',[1,2,5,7,9]],['Water bottle','bottle',[0,2,3,8,9]]];
+$('#reg').innerHTML=REG.map(r=>`<span>${r[0]}</span>`+r[2].map(i=>`<img src="reg/${r[1]}${i}.jpg" alt="${r[0]} registration photo" loading="lazy">`).join('')).join('');
+// theme
+const tb=$('#theme'),dark=()=>document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+const lab=()=>{tb.querySelector('span').textContent=dark()?'Light':'Dark'};lab();
+tb.addEventListener('click',()=>{const t=dark()?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('theme',t)}catch(e){}lab()});
+// bars
+const wil=(k,n)=>{const z=1.96,p=k/n,c=(p+z*z/(2*n))/(1+z*z/n),h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/(1+z*z/n);return [Math.max(0,c-h),Math.min(1,c+h)]};
+$('#mainBars').innerHTML=[['Our system',24,50,'var(--acc)'],['Usual place',6,50,'var(--base)'],['Random guess',6,50,'var(--base)']].map(r=>{const w=wil(r[1],r[2]);
+return `<div class="r"><span>${r[0]}</span><div class="t"><i style="width:${r[1]/r[2]*100}%;background:${r[3]}"></i><s style="left:12.5%"></s></div><span class="v">${Math.round(r[1]/r[2]*100)}% <small>(${Math.round(w[0]*100)}–${Math.round(w[1]*100)})</small></span></div>`}).join('');
+// keys
+const KM=[['YOLO: full resolution',37,0],['DINOv2: tiles',18,14],['OWLv2: whole photo',9,16],['DINOv2: one crop per zone',8,14]];
+let kSel=0;const kImg=new Image();kImg.src='keys.png';
+const drawKeys=()=>{const cv=$('#keysCv'),x=cv.getContext('2d'),m=KM[kSel],n=Math.max(4,Math.round(224*m[1]/43));
+const t=document.createElement('canvas');t.width=t.height=n;t.getContext('2d').drawImage(kImg,0,0,n,n);
+x.imageSmoothingEnabled=false;x.clearRect(0,0,240,240);x.drawImage(t,0,0,240,240);
+$('#keysSeg').innerHTML=KM.map((k,i)=>`<button class="${i===kSel?'on':''}" data-i="${i}">${k[0]}</button>`).join('');
+$('#keysCap').textContent=`${m[0]}: the keys are about ${m[1]} pixels wide.`+(m[2]?` The model looks at the image in squares of ${m[2]} pixels, so the keys fill about one square.`:' The model sees them clearly enough to find them.')};
+kImg.onload=drawKeys;$('#keysSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(b){kSel=+b.dataset.i;drawKeys()}});
+// demo
+const F=D.frames,N=F.length,REAL={Keys:'0 of 10',Wallet:'0 of 10',Mug:'9 of 10',Phone:'6 of 10','Water bottle':'9 of 10'};
+const parse=s=>{s=String(s);const z=(s.match(/\b([1-8]) [A-Z]/)||[])[1],zn=z?+z:null;
+if(s.startsWith('carried'))return['carried',null];if(s.startsWith('blocked'))return['blocked',zn];if(s.startsWith('removed'))return['removed',null];if(s.startsWith('not in room'))return['out',null];if(s.includes('partly hidden'))return['partly',zn];return['visible',zn]};
+const seen=st=>st==='visible'||st==='partly';
+const hm=t=>t.slice(0,5);
+const answer=(i,k)=>{const o=OBJ[k];let last=-1;for(let j=0;j<=i;j++)if(seen(parse(F[j].s[k])[0]))last=j;
+const [st,zn]=parse(F[i].s[k]);
+if(seen(st))return{z:zn,text:`${o}: on the ${ZN[zn]} now.`};
+if(last>=0){const lz=st==='blocked'?zn:parse(F[last].s[k])[1];return{z:lz,text:`${o}: last seen on the ${ZN[lz]} at ${hm(F[last].t)}.`+(st==='blocked'?' Someone is blocking the view now.':' Not seen since.')}}
+return{z:0,text:`${o}: not seen yet.`}};
+let di=20,dk=0,timer=null;
+$('#dObjs').innerHTML=OBJ.map((o,k)=>`<button data-k="${k}">${o}</button>`).join('');
+const draw=z=>{const f=F[di];$('#dImg').src='f/'+f.f+'.jpg';if(di+1<N)new Image().src='f/'+F[di+1].f+'.jpg';
+$('#dTime').textContent=f.t.slice(0,5)+(f.light==='On'?'':' · lights '+(f.light==='Off'?'off':'partly off'));
+$('#dSvg').innerHTML=z?zones(z):'';
+document.querySelectorAll('#dObjs button').forEach(b=>b.classList.toggle('on',+b.dataset.k===dk));
+$('#dAsk').textContent=dk===0?'Where are my keys?':`Where is my ${OBJ[dk].toLowerCase()}?`};
+const ask=()=>{const a=answer(di,dk);draw(a.z);$('#dReply').innerHTML=`“${a.text}”<small>In the test, the real system found the ${OBJ[dk].toLowerCase()} in the right zone ${REAL[OBJ[dk]]} times.</small>`;
+say(a.text)};
+let listening=false,rec=null;
+const say=text=>{if(!$('#dSpeak').checked)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en';speechSynthesis.speak(u)}catch(e){}};
+const findObj=t=>{t=t.toLowerCase();const m=[[/\bkeys?\b/,0],[/\bwallet|purse/,1],[/\bmug\b|\bcup\b/,2],[/\bphone|cellphone|mobile/,3],[/bottle|water/,4]];for(const [re,k] of m)if(re.test(t))return k;return -1};
+const mic=$('#dMic');
+const heard=text=>{const k=findObj(text);if(k<0){$('#dHeard').textContent=`Heard: “${text}”. Please name keys, wallet, mug, phone or water bottle.`;say('Sorry, which object? Keys, wallet, mug, phone or water bottle?');return}
+$('#dHeard').textContent=`Heard: “${text}”`;dk=k;ask()};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+const setMic=on=>{listening=on;mic.classList.toggle('live',on);mic.querySelector('span').textContent=on?'Listening… tap to stop':'Ask by voice'};
+if(SR){mic.style.display='flex';$('#micNote').textContent='Press the microphone, then say your question. Your browser will ask once for permission to use the microphone. Voice questions work in Chrome and Edge and need an internet connection.';
+mic.addEventListener('click',()=>{if(listening&&rec){rec.stop();return}
+try{speechSynthesis.cancel()}catch(e){}
+rec=new SR();rec.interimResults=true;rec.maxAlternatives=1;let done=false;
+rec.onresult=e=>{let t='';for(const r of e.results)t+=r[0].transcript;const fin=e.results[e.results.length-1].isFinal;
+if(fin&&!done){done=true;rec.stop();heard(t.trim())}else $('#dHeard').textContent='Listening: '+t};
+rec.onerror=e=>{$('#dHeard').textContent=e.error==='not-allowed'?'Microphone not allowed. Use the object buttons instead.':e.error==='no-speech'?'I didn’t hear anything. Try again.':'Could not use the microphone. Try again or use the buttons.'};
+rec.onend=()=>setMic(false);
+try{rec.start();setMic(true);$('#dHeard').textContent='Listening…'}catch(e){$('#dHeard').textContent='Could not start the microphone.'}})}
+const set=i=>{di=i;$('#dRange').value=i;draw(0);$('#dReply').innerHTML='<small style="margin:0">Time: '+F[i].t.slice(0,5)+'. Pick an object and ask.</small>'};
+$('#dRange').addEventListener('input',e=>set(+e.target.value));
+$('#dObjs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){dk=+b.dataset.k;draw(0)}});
+$('#dAsk').addEventListener('click',ask);
+$('#dRand').addEventListener('click',()=>set(Math.floor(Math.random()*N)));
+$('#dPlay').addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;$('#dPlay').textContent='Play';return}$('#dPlay').textContent='Pause';timer=setInterval(()=>{if(di>=N-1){clearInterval(timer);timer=null;$('#dPlay').textContent='Play';return}set(di+1)},700)});
+set(20);
+}
+</script>
+</body>
+</html>
