@@ -142,8 +142,15 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 </figure>
 
 <h3>The final system</h3>
-<div class="pipe"><span>Photo every 30 s</span><em>→</em><span>640-pixel tiles</span><em>→</em><span>YOLO11-s</span><em>→</em><span>Best box per object</span><em>→</em><span>Zone</span><em>→</em><span>Spoken answer</span></div>
-<p style="margin-top:20px">YOLO11-s is a small detector with 9.4 million parameters. We cut each photo into 640-pixel tiles so small objects keep their full detail. We fine-tuned the model on Session 1 and pasted objects into new places in the training photos, so it learns what the objects look like rather than where they were. The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
+<p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose YOLO11-s, a small detector with 9.4 million parameters. The pipeline is as follows:</p>
+<div class="pipe">
+  <span>A photo is taken every 30 seconds</span><em>→</em>
+  <span>The view is sliced into 70 tiles of 640 px each</span><em>→</em>
+  <span>The model draws a box around each object and gives it a confidence score</span><em>→</em>
+  <span>Pick the box with the highest score</span><em>→</em>
+  <span>Place the object into its zone</span><em>→</em>
+  <span>Say it out loud</span>
+</div>
 
 <h2>Results</h2>
 <p>On the 50 test questions from Session 2, our system named the right zone 48% of the time. Random guessing and the “usual place” rule both got 12%.</p>
