@@ -138,25 +138,20 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <p>One of the reasons the first set of methods failed is size. The keys are about 37 × 23 pixels in a 12.2-megapixel photo. When a model shrinks the photo to save computing power, the keys almost disappear. Pick a model below to see the keys at the size each model received them.</p>
 
 <figure>
-  <img src="keys_shrinking_figure.png" alt="The keys shrink to a smudge for DINOv2 but stay full size in our 640-pixel tile" style="width:100%">
-  <figcaption>When the armchair zone is cropped and shrunk to 210 × 224 pixels for DINOv2, the keys become a blurry smudge of about 15 × 8 pixels, while our 640-pixel tiles keep them at full size for YOLO11-s.</figcaption>
-</figure>
-
-<figure>
 <div class="keys"><canvas id="keysCv" width="240" height="240" aria-label="The keys at the size each model receives them"></canvas><div class="seg" id="keysSeg"></div></div>
 <figcaption id="keysCap"></figcaption>
 </figure>
 
 <h3>The final system</h3>
 <p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose YOLO11-s, a small detector with 9.4 million parameters. The pipeline is as follows:</p>
-<div class="pipe">
-  <span>A photo is taken every 30 seconds</span><em>→</em>
-  <span>The view is sliced into 70 tiles of 640 px each</span><em>→</em>
-  <span>The model draws a box around each object and gives it a confidence score</span><em>→</em>
-  <span>Pick the box with the highest score</span><em>→</em>
-  <span>Place the object into its zone</span><em>→</em>
-  <span>Say it out loud</span>
-</div>
+<ol style="list-style:none;padding:0;margin:28px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>1 · Snap</b><br><span style="opacity:.75">A photo of the room every 30 seconds</span></li>
+  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>2 · Slice</b><br><span style="opacity:.75">Cut into ~70 tiles of 640 px, so small objects keep their size</span></li>
+  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>3 · Spot</b><br><span style="opacity:.75">YOLO11-s draws a box around each object, with a confidence score</span></li>
+  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>4 · Pick</b><br><span style="opacity:.75">Keep the box with the highest score</span></li>
+  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>5 · Place</b><br><span style="opacity:.75">The centre of the box shows which zone the object is in</span></li>
+  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>6 · Tell</b><br><span style="opacity:.75">Say it out loud</span></li>
+</ol>
 
 <p style="margin-top:20px">The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
    
