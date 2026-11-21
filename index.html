@@ -143,15 +143,22 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 </figure>
 
 <h3>The final system</h3>
-<p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose YOLO11-s, a small detector with 9.4 million parameters. The pipeline is as follows:</p>
-<ol style="list-style:none;padding:0;margin:28px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
-  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>1 · Snap</b><br><span style="opacity:.75">A photo of the room every 30 seconds</span></li>
-  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>2 · Slice</b><br><span style="opacity:.75">Cut into ~70 tiles of 640 px, so small objects keep their size</span></li>
-  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>3 · Spot</b><br><span style="opacity:.75">YOLO11-s draws a box around each object, with a confidence score</span></li>
-  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>4 · Pick</b><br><span style="opacity:.75">Keep the box with the highest score</span></li>
-  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>5 · Place</b><br><span style="opacity:.75">The centre of the box shows which zone the object is in</span></li>
-  <li style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px"><b>6 · Tell</b><br><span style="opacity:.75">Say it out loud</span></li>
-</ol>
+<p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose <b>YOLO11-s</b>, a small detector with 9.4 million parameters. The pipeline:</p>
+
+<style>
+.pf{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:24px 0}
+.pf div{padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px}
+.pf b{color:#6FA0D8}.pf small{display:block;opacity:.75;margin-top:4px}
+</style>
+
+<div class="pf">
+  <div><b>1 · Snap</b><small>A photo of the room every 30 s</small></div>
+  <div><b>2 · Slice</b><small>~70 tiles of 640 px, so small objects keep their size</small></div>
+  <div><b>3 · Spot</b><small>YOLO11-s boxes each object with a confidence score</small></div>
+  <div><b>4 · Pick</b><small>Keep the best box (score ≥ 0.63)</small></div>
+  <div><b>5 · Place</b><small>The box centre gives the zone</small></div>
+  <div><b>6 · Tell</b><small>Say the zone and time out loud</small></div>
+</div>
 
 <p style="margin-top:20px">The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
    
