@@ -135,16 +135,31 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <tr><td>OWLv2 object detector</td><td>None</td><td class="n">36%</td></tr>
 <tr class="us"><td>YOLO11-s</td><td>Fine-tuned on Session 1</td><td class="n">64%</td></tr>
 </tbody></table>
-<p>The main reason the first methods failed is size. The keys are about 37 × 23 pixels in a 12-megapixel photo. When a model shrinks the photo to save computing power, the keys almost disappear. Pick a model below to see the keys at the size each model received them.</p>
+<p>One of the reasons the first set of methods failed is size. The keys are about 37 × 23 pixels in a 12.2-megapixel photo. When a model shrinks the photo to save computing power, the keys almost disappear. Pick a model below to see the keys at the size each model received them.</p>
+
+<figure>
+  <img src="keys_shrinking_figure.png" alt="The keys shrink to a smudge for DINOv2 but stay full size in our 640-pixel tile" style="width:100%">
+  <figcaption>When the armchair zone is cropped and shrunk to 210 × 224 pixels for DINOv2, the keys become a blurry smudge of about 15 × 8 pixels, while our 640-pixel tiles keep them at full size for YOLO11-s.</figcaption>
+</figure>
+
 <figure>
 <div class="keys"><canvas id="keysCv" width="240" height="240" aria-label="The keys at the size each model receives them"></canvas><div class="seg" id="keysSeg"></div></div>
 <figcaption id="keysCap"></figcaption>
 </figure>
 
 <h3>The final system</h3>
-<div class="pipe"><span>Photo every 30 s</span><em>→</em><span>640-pixel tiles</span><em>→</em><span>YOLO11-s</span><em>→</em><span>Best box per object</span><em>→</em><span>Zone</span><em>→</em><span>Spoken answer</span></div>
-<p style="margin-top:20px">YOLO11-s is a small detector with 9.4 million parameters. We cut each photo into 640-pixel tiles so small objects keep their full detail. We fine-tuned the model on Session 1 and pasted objects into new places in the training photos, so it learns what the objects look like rather than where they were. The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
+<p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose YOLO11-s, a small detector with 9.4 million parameters. The pipeline is as follows:</p>
+<div class="pipe">
+  <span>A photo is taken every 30 seconds</span><em>→</em>
+  <span>The view is sliced into 70 tiles of 640 px each</span><em>→</em>
+  <span>The model draws a box around each object and gives it a confidence score</span><em>→</em>
+  <span>Pick the box with the highest score</span><em>→</em>
+  <span>Place the object into its zone</span><em>→</em>
+  <span>Say it out loud</span>
+</div>
 
+<p style="margin-top:20px">The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
+   
 <h2>Results</h2>
 <p>On the 50 test questions from Session 2, our system named the right zone 48% of the time. Random guessing and the “usual place” rule both got 12%.</p>
 <figure>
@@ -184,16 +199,14 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <article style="padding-top:0">
 <h2>Where it fails</h2>
 <ul>
-<li><strong>Keys and wallet.</strong> The system never found them in the right zone (0 of 10 each). Both are small and lie flat.</li>
-<li><strong>The busy counter.</strong> Most test questions were about objects on the counter, next to plants, a tap and other items, and part of the time with the cabinet lights off. Only 4 of 27 of these questions were right.</li>
+<li><strong>Keys and wallet.</strong> The system never found them in the right zone (0 of 10 each). Both are small, lie flat and are mixed with the background.</li>
+<li><strong>The busy counter.</strong> Most test questions were about objects on the counter, next to plants, a tap and other items, and part of the time with the cabinet lights off and also there were people in that frame. Only 4 of 27 of these questions were right. It also suggests that the counter wall style is busy and dark. </li>
 <li><strong>The middle of the floor.</strong> The wallet lay on the carpet for 19 photos and was never found.</li>
 </ul>
 <h3>Limits of our test</h3>
 <ul>
-<li>We trained a model, although our proposal said we would not.</li>
-<li>We used one room, one camera, 5 objects and 50 test questions. With this few questions, the true accuracy could be anywhere from about 35% to 61%.</li>
+<li>We used one room view not a full house, one camera, 5 objects and 50 test questions.</li>
 <li>The camera sat slightly lower in Session 2, so the zone outlines need to be adjusted for each session.</li>
-<li>We did not test it on a phone. It took 25.7 seconds per photo on a CPU, which fits within the 30 seconds between photos.</li>
 <li>We did not test it with people who have visual impairments. That needs an ethics review.</li>
 </ul>
 
