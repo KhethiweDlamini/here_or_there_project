@@ -14,25 +14,25 @@ On 50 held-out test questions (Session 2), our final system, a YOLO11-s detector
 
 ### The write-up website
 
-| Path | What it is |
-| --- | --- |
-| `index.html` | The write-up as a single-page blog post: problem, method, results, an interactive demo and limitations. All styles, scripts and the demo data are inside this file. |
-| `video.mp4`, `poster.jpg` | Short video (and its preview frame) showing how the app should work. |
-| `room.jpg` | The test room as the fixed camera sees it. The page draws the 8 zones on top of it. |
-| `keys.png` | Close-up of the keys, used by the "keys at the size each model receives them" figure. |
-| `f/` | The 60 Session 2 test photos (`IMG001.jpg` to `IMG060.jpg`), reduced to 540 × 720, used by the demo. People are blurred. |
-| `reg/` | 25 registration photos (5 per object) shown in the post. These are examples, not the full set of 207. |
-| `.nojekyll` | Tells GitHub Pages to serve the files as they are. |
+| Path                      | What it is                                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.html`              | The write-up as a single-page blog post: problem, method, results, an interactive demo and limitations. All styles, scripts and the demo data are inside this file. |
+| `video.mp4`, `poster.jpg` | Short video (and its preview frame) showing how the app should work.                                                                                                |
+| `room.jpg`                | The test room as the fixed camera sees it. The page draws the 8 zones on top of it.                                                                                 |
+| `keys.png`                | Close-up of the keys, used by the "keys at the size each model receives them" figure.                                                                               |
+| `f/`                      | The 60 Session 2 test photos (`IMG001.jpg` to `IMG060.jpg`), reduced to 540 × 720, used by the demo. People are blurred.                                            |
+| `reg/`                    | 25 registration photos (5 per object) shown in the post. These are examples, not the full set of 207.                                                               |
+| `.nojekyll`               | Tells GitHub Pages to serve the files as they are.                                                                                                                  |
 
 ### Experiments
 
-| Path | What it is |
-| --- | --- |
-| `notebooks/here_or_there_YOLO.ipynb` | *Will be uploaded soon.* The notebook for the **final system**: YOLO11-s fine-tuned on Session 1, run on 640-pixel tiles of each photo, with a confidence threshold of 0.63 chosen on Session 1. These are the results reported on the website. |
+| Path                                               | What it is                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `notebooks/here_or_there_YOLO.ipynb`               | The notebook for the **final system**: YOLO11-s fine-tuned on Session 1, run on 640-pixel tiles of each photo, with a confidence threshold of 0.63 chosen on Session 1. These are the results reported on the website.                                                                                                                                                                                |
 | `notebooks/here_or_there_pre-trained_models.ipynb` | The Kaggle/Colab notebook for the **zero-training methods** we tried first: DINOv2 zone crops (round 1), DINOv2 tiles and OWLv2 (round 2), and OWLv2 with the usual-place prior (round 3). It enforces the test protocol in code: settings are chosen on Session 1 only, and the Session 2 questions are fixed before any Session 2 photo is processed. Setup steps are in the notebook's first cell. |
-| `plots/make_plots.py` | Draws five slide-ready charts. The numbers are copied into the script from the pre-trained models notebook's round 3 run (Kaggle Version 5). |
-| `plots/*.png` | The five charts: Session 1 vs Session 2 gap, methods vs chance, answer breakdown, zones where objects were found, and the H1/H2 hypothesis checks. |
-| `plots/fonts/` | Lato and Noto Serif fonts used by the charts (SIL Open Font License). |
+| `plots/make_plots.py`                              | Draws five slide-ready charts. The numbers are copied into the script from the pre-trained models notebook's round 3 run (Kaggle Version 5).                                                                                                                                                                                                                                                          |
+| `plots/*.png`                                      | The five charts: Session 1 vs Session 2 gap, methods vs chance, answer breakdown, zones where objects were found, and the H1/H2 hypothesis checks.                                                                                                                                                                                                                                                    |
+| `plots/fonts/`                                     | Lato and Noto Serif fonts used by the charts (SIL Open Font License).                                                                                                                                                                                                                                                                                                                                 |
 
 **Note:** `plots/` shows the round 3 OWLv2 results from the pre-trained models notebook, not the final YOLO11-s results. The YOLO11-s numbers are on the website.
 
