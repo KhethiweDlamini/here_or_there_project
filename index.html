@@ -92,15 +92,14 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 
 <article>
 <h1>Did I lose it here, or there?</h1>
-<p class="sub">We built a phone camera that remembers where you last left your things, and tested it on photos it had never seen.</p>
+<p class="sub">We built a phone camera application that remembers where you last left your things, and tested it on photos it had never seen.</p>
 <div class="by"><span><b>Christiana Adisa, Safia Gibril, Khethiwe Dlamini and Alaa Almouiz Farog Mohammed</b></span><span>AIMS · November 2026</span><span>6 min read</span></div>
 
+<h2>Problem and motivation</h2>
 <figure>
 <video controls playsinline preload="metadata" poster="poster.jpg" src="video.mp4"></video>
 <figcaption>How the app should work: Gogo asks where her keys are, and the phone on the stand answers out loud.</figcaption>
 </figure>
-
-<h2>The problem</h2>
 <blockquote>Gogo has low vision. She asks, “Where are my keys?” A phone on a stand answers out loud: “Your keys were on the armchair until 2:32 pm.”</blockquote>
 <p>People with visual impairments search for misplaced things every day. Most tools that could help need an internet connection, cloud models or expensive wearable cameras. We wanted something that works on a cheap phone, without internet, and keeps the photos on the device.</p>
 <p><strong>Our question:</strong> can a small model, looking at one photo every 30 seconds from a fixed camera, say which of 8 zones in a room an object was last seen in, and when it disappeared? And can it say “not seen” when it has not seen the object?</p>
@@ -108,8 +107,8 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <p><strong>What already exists.</strong> Find My Things (Morrison et al., 2023) recognises a user’s own objects, but only the ones the camera is pointing at right now. GO-Finder (Yagi et al., 2021), MemPal (Maniar et al., 2025) and the Ego4D Visual Queries benchmark find where an object was last seen, but they use video from a camera the person wears, and MemPal sends it to cloud models.</p>
 <p><strong>What we expected.</strong> H1: our system would beat random guessing when objects are in clear view or in their usual place. H2: a simple “usual place” rule would fail when objects are small, hidden or moved somewhere new.</p>
 
-<h2>Our data</h2>
-<p>We recorded our own dataset. A phone on a stand took a photo every 30 seconds. We split the room into 8 zones and used 5 objects: keys, wallet, mug, phone and water bottle.</p>
+<h2>Method</h2>
+<p><strong>Our data: </strong>We recorded our own dataset. A phone on a stand took a photo every 30 seconds. We split the room into 8 zones and used 5 objects: keys, wallet, mug, phone and water bottle.</p>
 <figure>
 <div class="room"><img src="room.jpg" alt="The test room: an armchair, a corner shelf, a counter with cupboards, and glass shelves"><svg id="heroZones" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"></svg></div>
 <figcaption>Our test room in the AIMS lobby, as the fixed phone sees it. The lines mark the 8 zones.</figcaption>
@@ -162,7 +161,7 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 
 <p style="margin-top:20px">The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
    
-<h2>Results</h2>
+<h2>Results and evaluation</h2>
 <p>On the 50 test questions from Session 2, our system named the right zone 48% of the time. Random guessing and the “usual place” rule both got 12%.</p>
 <figure>
 <div class="bars" id="mainBars"></div>
@@ -179,7 +178,6 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <h2>Try it</h2>
 <p>Move through the 60 real test photos and ask where an object is. You can click an object or ask out loud, and the answer is shown and read out loud.</p>
 </article>
-
 <div class="demo">
 <div class="dm">
 <div>
@@ -199,7 +197,8 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 </div>
 
 <article style="padding-top:0">
-<h2>Where it fails</h2>
+<h2>Limitations and failure cases</h2>
+<h3>Where it fails</h3>
 <ul>
 <li><strong>Keys and wallet.</strong> The system never found them in the right zone (0 of 10 each). Both are small, lie flat and are mixed with the background.</li>
 <li><strong>The busy counter.</strong> Most test questions were about objects on the counter, next to plants, a tap and other items, and part of the time with the cabinet lights off and also there were people in that frame. Only 4 of 27 of these questions were right. It also suggests that the counter wall style is busy and dark. </li>
