@@ -36,9 +36,15 @@ On 50 held-out test questions (Session 2), our final system, a YOLO11-s detector
 
 **Note:** `plots/` shows the round 3 OWLv2 results from the pre-trained models notebook, not the final YOLO11-s results. The YOLO11-s numbers are on the website.
 
+### Data
+
+| Path | What it is |
+| --- | --- |
+| `data/placement_log_v4_corrected_with_S2.xlsx` | The placement log: the ground truth for both sessions, built from the Roboflow labels. It records where every object was in every photo, the 8 zone outlines, each object's usual zone, the expected answer at every frame time, and notes on how Session 2 was built. Start with the `README` tab. The S1 tabs cover Session 1, and the tabs starting with `S2` cover Session 2. People are only described by role (grandma, daughter, nephew). |
+
 ### Not in this repository
 
-The full photo sessions, all 207 registration photos, the placement log (`placement_log_v4_corrected_with_S2.xlsx`) and the Roboflow labels are kept in a private Kaggle dataset, because people appear in the photos. The notebooks need these files to run.
+The full photo sessions, all 207 registration photos and the Roboflow labels are kept in a private Kaggle dataset, because people appear in the photos. The notebooks need these files, together with the placement log above, to run.
 
 ## How to use it
 
