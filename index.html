@@ -145,19 +145,20 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose <b>YOLO11-s</b>, a small detector with 9.4 million parameters. The pipeline:</p>
 
 <style>
-.pf{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:24px 0}
-.pf div{padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px}
-.pf b{color:#6FA0D8}.pf small{display:block;opacity:.75;margin-top:4px}
+.pf{list-style:none;counter-reset:s;margin:20px 0;padding:0}
+.pf li{counter-increment:s;padding:6px 0 6px 28px;position:relative}
+.pf li::before{content:counter(s);position:absolute;left:0;opacity:.5}
+.pf span{opacity:.7}
 </style>
 
-<div class="pf">
-  <div><b>1 · Snap</b><small>A photo of the room every 30 s</small></div>
-  <div><b>2 · Slice</b><small>~70 tiles of 640 px, so small objects keep their size</small></div>
-  <div><b>3 · Spot</b><small>YOLO11-s boxes each object with a confidence score</small></div>
-  <div><b>4 · Pick</b><small>Keep the best box (score ≥ 0.63)</small></div>
-  <div><b>5 · Place</b><small>The box centre gives the zone</small></div>
-  <div><b>6 · Tell</b><small>Say the zone and time out loud</small></div>
-</div>
+<ol class="pf">
+  <li><b>Snap</b> <span>· A photo of the room every 30 s</span></li>
+  <li><b>Slice</b> <span>· ~70 tiles of 640 px, so small objects keep their size</span></li>
+  <li><b>Spot</b> <span>· YOLO11-s boxes each object with a confidence score</span></li>
+  <li><b>Pick</b> <span>· Keep the best box (score ≥ 0.63)</span></li>
+  <li><b>Place</b> <span>· The box centre gives the zone</span></li>
+  <li><b>Tell</b> <span>· Say the zone and time out loud</span></li>
+</ol>
 
 <p style="margin-top:20px">The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
    
