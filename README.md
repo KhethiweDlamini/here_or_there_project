@@ -28,7 +28,7 @@ On 50 held-out test questions (Session 2), our final system, a YOLO11-s detector
 
 | Path | What it is |
 | --- | --- |
-| `notebooks/here_or_there_YOLO.ipynb` | The notebook for the **final system**: YOLO11-s fine-tuned on Session 1, run on 640-pixel tiles of each photo, with a confidence threshold of 0.63 chosen on Session 1. These are the results reported on the website. |
+| `notebooks/here_or_there_YOLO.ipynb` | *Will be uploaded soon.* The notebook for the **final system**: YOLO11-s fine-tuned on Session 1, run on 640-pixel tiles of each photo, with a confidence threshold of 0.63 chosen on Session 1. These are the results reported on the website. |
 | `notebooks/here_or_there_pre-trained_models.ipynb` | The Kaggle/Colab notebook for the **zero-training methods** we tried first: DINOv2 zone crops (round 1), DINOv2 tiles and OWLv2 (round 2), and OWLv2 with the usual-place prior (round 3). It enforces the test protocol in code: settings are chosen on Session 1 only, and the Session 2 questions are fixed before any Session 2 photo is processed. Setup steps are in the notebook's first cell. |
 | `plots/make_plots.py` | Draws five slide-ready charts. The numbers are copied into the script from the pre-trained models notebook's round 3 run (Kaggle Version 5). |
 | `plots/*.png` | The five charts: Session 1 vs Session 2 gap, methods vs chance, answer breakdown, zones where objects were found, and the H1/H2 hypothesis checks. |
