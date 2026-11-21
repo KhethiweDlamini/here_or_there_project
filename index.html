@@ -142,16 +142,23 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 </figure>
 
 <h3>The final system</h3>
-<p>Since we wanted to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose <b>YOLO11-s</b>, a small detector with 9.4 million parameters. The pipeline:</p>
+<p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose <b>YOLO11-s</b>, a small detector with 9.4 million parameters. The pipeline:</p>
 
-<div class="pf">
-  <div><b>1 · Snap</b><small>A photo of the room every 30 s</small></div>
-  <div><b>2 · Slice</b><small>~70 tiles of 640 px, so small objects keep their size</small></div>
-  <div><b>3 · Spot</b><small>YOLO11-s boxes each object with a confidence score</small></div>
-  <div><b>4 · Pick</b><small>Keep the best box (score ≥ 0.63)</small></div>
-  <div><b>5 · Place</b><small>The box centre gives the zone</small></div>
-  <div><b>6 · Tell</b><small>Say the zone and time out loud</small></div>
-</div>
+<style>
+.pf{list-style:none;counter-reset:s;margin:20px 0;padding:0}
+.pf li{counter-increment:s;padding:6px 0 6px 28px;position:relative}
+.pf li::before{content:counter(s);position:absolute;left:0;opacity:.5}
+.pf span{opacity:.7}
+</style>
+
+<ol class="pf">
+  <li><b>Snap</b> <span>· A photo of the room every 30 s</span></li>
+  <li><b>Slice</b> <span>· ~70 tiles of 640 px, so small objects keep their size</span></li>
+  <li><b>Spot</b> <span>· YOLO11-s boxes each object with a confidence score</span></li>
+  <li><b>Pick</b> <span>· Keep the best box (score ≥ 0.63)</span></li>
+  <li><b>Place</b> <span>· The box centre gives the zone</span></li>
+  <li><b>Tell</b> <span>· Say the zone and time out loud</span></li>
+</ol>
 
 <p>We chose the 0.63 threshold on Session 1 and did not change it for the test.</p>
 
