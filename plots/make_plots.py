@@ -42,7 +42,7 @@ DATA = {
     'H1': [(OURS, 3, 3), ('Whole photo, no zones', 0, 3), (PRIOR, 3, 3), ('Random zone', 0, 3)],
     'H2': [(OURS, 2, 45), ('Whole photo, no zones', 0, 45), (PRIOR, 0, 45), ('Random zone', 7, 45)],
 }
-SOURCE = 'Source: pause_and_find.ipynb, round 3 (Kaggle run v5). Session 2 is held out: 60 frames, 50 questions.'
+SOURCE = 'Source: here_or_there_pre-trained_models.ipynb, round 3 (Kaggle run v5). Session 2 is held out: 60 frames, 50 questions.'
 
 # ---------------------------------------------------------------- theme tokens (sampled from the deck's slide)
 SURFACE, INK, INK2, MUTED = '#ffffff', '#2b2f36', '#4b5563', '#6b7280'
