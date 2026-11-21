@@ -28,22 +28,23 @@ On 50 held-out test questions (Session 2), our final system, a YOLO11-s detector
 
 | Path | What it is |
 | --- | --- |
-| `notebooks/pause_and_find.ipynb` | The Kaggle/Colab notebook for the **zero-training methods**: DINOv2 zone crops (round 1), DINOv2 tiles and OWLv2 (round 2), and OWLv2 with the usual-place prior (round 3). It enforces the test protocol in code: settings are chosen on Session 1 only, and the Session 2 questions are fixed before any Session 2 photo is processed. Setup steps are in the notebook's first cell. |
-| `plots/make_plots.py` | Draws five slide-ready charts. The numbers are copied into the script from the notebook's round 3 run (Kaggle Version 5). |
+| `notebooks/here_or_there_YOLO.ipynb` | The notebook for the **final system**: YOLO11-s fine-tuned on Session 1, run on 640-pixel tiles of each photo, with a confidence threshold of 0.63 chosen on Session 1. These are the results reported on the website. |
+| `notebooks/here_or_there_pre-trained_models.ipynb` | The Kaggle/Colab notebook for the **zero-training methods** we tried first: DINOv2 zone crops (round 1), DINOv2 tiles and OWLv2 (round 2), and OWLv2 with the usual-place prior (round 3). It enforces the test protocol in code: settings are chosen on Session 1 only, and the Session 2 questions are fixed before any Session 2 photo is processed. Setup steps are in the notebook's first cell. |
+| `plots/make_plots.py` | Draws five slide-ready charts. The numbers are copied into the script from the pre-trained models notebook's round 3 run (Kaggle Version 5). |
 | `plots/*.png` | The five charts: Session 1 vs Session 2 gap, methods vs chance, answer breakdown, zones where objects were found, and the H1/H2 hypothesis checks. |
 | `plots/fonts/` | Lato and Noto Serif fonts used by the charts (SIL Open Font License). |
 
-**Note:** the notebook and `plots/` show the round 3 OWLv2 results, which are the zero-training methods that did not work well. The **final YOLO11-s system** reported on the website was fine-tuned separately, and its training code is not in this repository.
+**Note:** `plots/` shows the round 3 OWLv2 results from the pre-trained models notebook, not the final YOLO11-s results. The YOLO11-s numbers are on the website.
 
 ### Not in this repository
 
-The full photo sessions, all 207 registration photos, the placement log (`placement_log_v4_corrected_with_S2.xlsx`) and the Roboflow labels are kept in a private Kaggle dataset, because people appear in the photos. The notebook needs these files to run.
+The full photo sessions, all 207 registration photos, the placement log (`placement_log_v4_corrected_with_S2.xlsx`) and the Roboflow labels are kept in a private Kaggle dataset, because people appear in the photos. The notebooks need these files to run.
 
 ## How to use it
 
 **View the write-up locally:** open `index.html` in a browser. Everything except the fonts and voice questions works offline.
 
-**Re-run the experiments:** follow the setup in the first cell of `notebooks/pause_and_find.ipynb`. In short, upload the data to a private Kaggle dataset, import the notebook, attach the dataset, turn Internet on (to download DINOv2 and OWLv2) and run all. Set `ROUND` in cell A1 to 1, 2 or 3. Results are written to a `results/` folder, including a readable `report_r3.html`.
+**Re-run the zero-training experiments:** follow the setup in the first cell of `notebooks/here_or_there_pre-trained_models.ipynb`. In short, upload the data to a private Kaggle dataset, import the notebook, attach the dataset, turn Internet on (to download DINOv2 and OWLv2) and run all. Set `ROUND` in cell A1 to 1, 2 or 3. Results are written to a `results/` folder, including a readable `report_r3.html`.
 
 **Redraw the charts:** if you re-run the notebook, update `DATA` at the top of `plots/make_plots.py`, then run:
 
@@ -51,6 +52,10 @@ The full photo sessions, all 207 registration photos, the placement log (`placem
 pip install numpy matplotlib
 python plots/make_plots.py
 ```
+
+## How we used Claude
+
+We used Claude, Anthropic's AI assistant, throughout the project. It helped with the proposal and slides, drafted the pre-trained models notebook and later added rounds 2 and 3, the results report and fixes, wrote the plotting script, and built the write-up page. It also reviewed and fixed the team's edits to the page and wrote this README. Commits where Claude wrote code are marked `Co-Authored-By: Claude` in the git history. The full statement is in the Sources section of the write-up.
 
 ## Notes
 
