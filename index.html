@@ -59,9 +59,9 @@ tr.us td{font-weight:700}
 .seg button.on,.objs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .btn.go{background:var(--acc);border-color:var(--acc);color:#fff}
-.pipe{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:400 15px Inter,sans-serif}
-.pipe span{padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:var(--soft)}
-.pipe em{font-style:normal;color:var(--mute)}
+.pf{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:24px 0;font:400 15px/1.45 Inter,sans-serif}
+.pf div{padding:14px;border:1px solid var(--line);border-radius:4px;background:var(--soft)}
+.pf b{color:var(--ink);font-weight:700}.pf small{display:block;font-size:14px;color:var(--mute);margin-top:4px}
 /* demo */
 .demo{max-width:880px;margin:36px auto;padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
 .dm{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:24px;align-items:start}
@@ -142,13 +142,7 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 </figure>
 
 <h3>The final system</h3>
-<p>Since we still want to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose <b>YOLO11-s</b>, a small detector with 9.4 million parameters. The pipeline:</p>
-
-<style>
-.pf{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:24px 0}
-.pf div{padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px}
-.pf b{color:#6FA0D8}.pf small{display:block;opacity:.75;margin-top:4px}
-</style>
+<p>Since we wanted to stick to the low-resource plan, we chose to fine-tune a small model on Session 1 photos. We chose <b>YOLO11-s</b>, a small detector with 9.4 million parameters. The pipeline:</p>
 
 <div class="pf">
   <div><b>1 · Snap</b><small>A photo of the room every 30 s</small></div>
@@ -159,8 +153,8 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
   <div><b>6 · Tell</b><small>Say the zone and time out loud</small></div>
 </div>
 
-<p style="margin-top:20px">The model only reports an object when its confidence is at least 0.63. We chose this threshold on Session 1 and did not change it for the test.</p>
-   
+<p>We chose the 0.63 threshold on Session 1 and did not change it for the test.</p>
+
 <h2>Results and evaluation</h2>
 <p>On the 50 test questions from Session 2, our system named the right zone 48% of the time. Random guessing and the “usual place” rule both got 12%.</p>
 <figure>
@@ -201,13 +195,15 @@ footer{max-width:680px;margin:0 auto;padding:0 20px 60px;font:400 14px/1.5 Inter
 <h3>Where it fails</h3>
 <ul>
 <li><strong>Keys and wallet.</strong> The system never found them in the right zone (0 of 10 each). Both are small, lie flat and are mixed with the background.</li>
-<li><strong>The busy counter.</strong> Most test questions were about objects on the counter, next to plants, a tap and other items, and part of the time with the cabinet lights off and also there were people in that frame. Only 4 of 27 of these questions were right. It also suggests that the counter wall style is busy and dark. </li>
+<li><strong>The busy counter.</strong> Most test questions were about objects on the counter, next to plants, a tap and other items, and part of the time with the cabinet lights off and people in the frame. The counter wall is also busy and dark, which makes small objects harder to see. Only 4 of 27 of these questions were right.</li>
 <li><strong>The middle of the floor.</strong> The wallet lay on the carpet for 19 photos and was never found.</li>
 </ul>
 <h3>Limits of our test</h3>
 <ul>
-<li>We used one room view not a full house, one camera, 5 objects and 50 test questions.</li>
+<li>We trained a model, although our proposal said we would not.</li>
+<li>We used one room view (not a full house), one camera, 5 objects and 50 test questions.</li>
 <li>The camera sat slightly lower in Session 2, so the zone outlines need to be adjusted for each session.</li>
+<li>We did not test it on a phone.</li>
 <li>We did not test it with people who have visual impairments. That needs an ethics review.</li>
 </ul>
 
